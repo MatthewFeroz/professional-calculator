@@ -110,6 +110,15 @@ CI checks. For line-by-line detail:
 pytest --cov-report=term-missing
 ```
 
+### Coverage exceptions (`# pragma: no cover`)
+
+Lines that are genuinely untestable (e.g. defensive `pass`/`continue`
+statements or platform-specific code) can be excluded from coverage metrics
+with a `# pragma: no cover` comment. **This project needed none**: every
+line and every branch — including the `if __name__ == "__main__"` guard in
+`main.py`, exercised in both directions via `runpy` and a plain import — is
+covered by a real test, with branch coverage (`--cov-branch`) enabled.
+
 ## Continuous Integration
 
 Every push and pull request triggers
