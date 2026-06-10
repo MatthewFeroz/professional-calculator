@@ -163,3 +163,14 @@ def test_main_runs_calculator(monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda _: "exit")
     runpy.run_path("main.py", run_name="__main__")
     assert "Exiting calculator. Goodbye!" in capsys.readouterr().out
+
+
+def test_main_import_does_not_start_repl(capsys):
+    """Importing main as a module must NOT start the REPL.
+
+    Together with the test above, this exercises both branches of the
+    ``if __name__ == "__main__"`` guard.
+    """
+    import main  # noqa: F401  pylint: disable=import-outside-toplevel
+
+    assert "Welcome" not in capsys.readouterr().out
